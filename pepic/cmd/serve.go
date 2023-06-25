@@ -32,6 +32,12 @@ var serveCmd = &cobra.Command{
 
 		// logging, limiting, panic recovery and other useful middlewares
 		e.Use(middleware.Recover())
+
+        e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+            AllowOrigins: []string{"https://i.notall.club", "https://notall.club"},
+            AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+        }))
+
 		e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 			Format: "${remote_ip} - [${time_rfc3339}] \"${method} ${uri}\" ${status} ${bytes_out} \"-\" \"${user_agent}\" \n",
 		}))
